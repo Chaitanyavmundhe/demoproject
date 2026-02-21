@@ -1,0 +1,39 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/index.css' %}">
+
+<h2>Upload File</h2>
+<form action="{% url 'upload' %}" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <label>File Title:</label>
+    <input type="text" name="title" required>
+    <label>Description:</label>
+    <textarea name="description"></textarea>
+    <label>Category:</label>
+    <select name="category" required>
+        <option value="CSE">CSE</option>
+        <option value="IT">IT</option>
+        <option value="Mechanical">Mechanical</option>
+        <option value="Assignment">Assignment</option>
+        <option value="Notes">Notes</option>
+        <option value="Electronics">Electronics</option>
+    </select>
+    <label>Semester:</label>
+    <select name="semester" required>
+        <option>Semester 1</option>
+        <option>Semester 2</option>
+        <option>Semester 3</option>
+        <option>Semester 4</option>
+        <option>Semester 5</option>
+        <option>Semester 6</option>
+        <option>Semester 7</option>
+    </select>
+    <label>Choose File:</label>
+    <input type="file" name="file" required>
+    <button type="submit">Upload</button>
+</form>
+
+{% for message in messages %}
+<p>{{ message }}</p>
+{% endfor %}
+
+<a href="{% url 'home' %}">Back to Home/Search</a>

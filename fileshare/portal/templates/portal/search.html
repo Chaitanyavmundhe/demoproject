@@ -1,0 +1,36 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/index.css' %}">
+
+<h2>Search Files</h2>
+<form method="get" action="{% url 'home' %}">
+    <input type="text" name="search" placeholder="Search by title or keyword">
+    <select name="filter_category">
+        <option value="">All Categories</option>
+        <option value="CSE">CSE</option>
+        <option value="IT">IT</option>
+        <option value="Mechanical">Mechanical</option>
+        <option value="Assignment">Assignment</option>
+        <option value="Notes">Notes</option>
+        <option value="Electronics">Electronics</option>
+    </select>
+    <button type="submit">Search</button>
+    <a href="{% url 'upload' %}"><button type="button">Upload File</button></a>
+</form>
+
+<ul>
+{% for file in files %}
+<li>
+    <strong>{{ file.title }}</strong> ({{ file.category }}, {{ file.semester }}) -
+    Uploaded by: {{ file.uploaded_by.first_name }} -
+    <a href="{{ file.file.url }}">Download</a>
+</li>
+{% empty %}
+<li>No files found.</li>
+{% endfor %}
+</ul>
+
+{% if user.is_authenticated %}
+<p>Logged in as {{ user.first_name }} | <a href="{% url 'logout' %}">Logout</a></p>
+{% else %}
+<p><a href="{% url 'login' %}">Login</a> or <a href="{% url 'register' %}">Register</a></p>
+{% endif %}
